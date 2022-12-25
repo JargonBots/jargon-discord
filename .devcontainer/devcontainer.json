@@ -1,0 +1,36 @@
+{
+    "name": "kcjargon",
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+    "service": "dev-app",
+    "workspaceFolder": "/workspace",
+    "settings": {
+        "python.pythonPath": "/usr/local/bin/python3",
+        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.lintOnSave": true,
+        "python.linting.flake8Enabled": true,
+        "python.linting.flake8Args": [
+            "--max-line-length=120",
+            "--extend-ignore=E203,E501,W503",
+            "--exclude=.venv"
+        ]
+    },
+    "extensions": [
+        "ms-python.python",
+        "tamasfe.even-better-toml",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "mikestead.dotenv",
+        "jeff-hykin.better-dockerfile-syntax",
+        "ms-vscode.makefile-tools",
+        "ms-python.isort"
+    ],
+    "remoteEnv": {
+        "KCJARGON_ENV": "dev"
+    },
+    "postStartCommand": "poetry --version && poetry version",
+    "remoteUser": "devuser"
+}

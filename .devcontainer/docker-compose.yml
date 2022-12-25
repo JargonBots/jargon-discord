@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  dev-app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      target: dev-container
+    env_file: ../config/.env
+    volumes:
+      - ..:/workspace:cached
+      - discord-bashhistory:/commandhistory
+    command: sleep infinity
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  #openai:
+  #  build:
+  #    context: ..
+  #    dockerfile: ./docker/Dockerfile
+  #    args:
+  #      KCJARGON_APP: openai
+  #      KCJARGON_ENV: dev
+  #    target: development
+  #  env_file: ../config/.env
+  #  volumes:
+  #    - ..:/usr/app:cached
+  #  command: sleep infinity
+  #discord:
+  #  build:
+  #    context: ..
+  #    dockerfile: ./docker/Dockerfile
+  #    args:
+  #      KCJARGON_APP: discord
+  #      KCJARGON_ENV: dev
+  #    target: development
+  #  env_file: ../config/.env
+  #  volumes:
+  #    - ..:/usr/app:cached
+  #  command: sleep infinity
+
+volumes:
+  kcjargon-bashhistory:
