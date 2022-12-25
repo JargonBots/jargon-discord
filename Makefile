@@ -5,15 +5,40 @@ APPS := discord
 DISCORD_DIR := ./discord
 DEV_DEPS := test,dev,docs,sandbox
 
-dev_requirements := $(shell )
+# Python
+PYTHON_BIN := /opt/pysetup/.venv/bin/python3
+PYTHON_PIP_BIN := /opt/pysetup/.venv/bin/pip3
+
+# Container Specific Paths
+POETRY_DIR := /opt/pysetup
+PY_ENV_DIR := /opt/pysetup/.venv
+
+POETRY_CMD := poetry
+
+ifdef REMOTE_CONTAINERS
+	POETRY_CMD := poetry --directory $(POETRY_DIR) 
+endif
+
+dev-container-start: poetry-install poetry-export-dev poetry-activate
+
+
 build: 
 	docker-compose build 
 
 poetry-install:
-	poetry install
+	# echo 'Install poetry dependencies'
+	$(POETRY_CMD)  install
 
 poetry-export-dev: poetry-install
-	echo `poetry export --without-hashes --without app-openai --format=requirements.txt >  $(DISCORD_DIR)/dev.requirements.txt`
+	# echo 'Export poetry development dependencies'
+	$(POETRY_CMD) export --without-hashes --format=requirements.txt >  ./dev.requirements.txt
 
 poetry-export-prod: poetry-install
-	echo `poetry export --without-hashes --without app-openai,$(DEV_DEPS) --format=requirements.txt > $(DISCORD_DIR)/prod.requirements.txt`
+	# echo 'Export poetry production dependencies'
+	$(POETRY_CMD)  export --without-hashes $(DEV_DEPS) --format=requirements.txt > ./requirements.txt
+
+poetry-activate:
+	$(POETRY_CMD) shell
+
+vscode-devcontair-dependencies:
+	

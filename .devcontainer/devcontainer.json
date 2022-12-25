@@ -1,13 +1,13 @@
 {
-    "name": "kcjargon",
+    "name": "jargon-discord",
     "dockerComposeFile": [
         "docker-compose.yml"
     ],
-    "service": "dev-app",
+    "service": "discord",
     "workspaceFolder": "/workspace",
     "settings": {
-        "python.pythonPath": "/usr/local/bin/python3",
-        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+        "python.pythonPath": "/opt/pysetup/.venv/bin/python3",
+        "python.defaultInterpreterPath": "/opt/pysetup/.venv/bin/python3",
         "python.formatting.provider": "black",
         "python.linting.enabled": true,
         "python.linting.lintOnSave": true,
@@ -31,6 +31,6 @@
     "remoteEnv": {
         "KCJARGON_ENV": "dev"
     },
-    "postStartCommand": "poetry --version && poetry version",
-    "remoteUser": "devuser"
+    "postStartCommand": "make poetry-export-dev && poetry --directory /opt/pysetup shell && ",
+    "remoteUser": "discord"
 }
