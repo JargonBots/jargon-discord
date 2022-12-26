@@ -12,6 +12,7 @@ services:
     env_file: ../config/.env
     volumes:
       - ..:/workspace:cached
+      - ../../jargonai:/jargonai
       - discord-bashhistory:/commandhistory
     command: sleep infinity
     extra_hosts:

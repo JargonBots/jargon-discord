@@ -30,6 +30,5 @@
     "remoteEnv": {
         "KCJARGON_ENV": "dev"
     },
-    "postStartCommand": "source /workspace/config/.env",
     "remoteUser": "discord"
 }
