@@ -8,4 +8,5 @@ services:
       args:
         JARGON_APP: discord
         JARGON_ENV: prod
+      target: production
     env_file: ./config/.env

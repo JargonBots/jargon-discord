@@ -25,12 +25,11 @@
         "ms-python.black-formatter",
         "mikestead.dotenv",
         "jeff-hykin.better-dockerfile-syntax",
-        "ms-vscode.makefile-tools",
-        "ms-python.isort"
+        "ms-vscode.makefile-tools"
     ],
     "remoteEnv": {
         "KCJARGON_ENV": "dev"
     },
-    "postStartCommand": "make poetry-export-dev && poetry --directory /opt/pysetup shell && ",
+    "postStartCommand": "source /workspace/config/.env",
     "remoteUser": "discord"
 }
