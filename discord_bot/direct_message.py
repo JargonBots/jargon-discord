@@ -42,7 +42,7 @@ async def on_message(message):
     if message.content.startswith("!") and not in_conversation:
         in_conversation = True
         actor_name = str(message.content[1::])
-        cv = Conversation(starting_environment="The following is a conversation with {}.".format(actor_name), bot_name="{}: ".format(actor_name))
+        cv = Conversation(starting_environment="The following is a discord chat with {}. The bot has knowledge of Discord code embedding (for example python code is inserted as ```python ..... ```) the bot can also insert links and mebed things so that they work with discord".format(actor_name), bot_name="{}: ".format(actor_name))
 
     while message.content != "quit" and in_conversation and message.author != client.user:
 
