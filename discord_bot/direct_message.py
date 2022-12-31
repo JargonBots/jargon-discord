@@ -2,7 +2,6 @@
 # Written By Armaan Kapoor & Erik Karlsson on 12-25-2022.
 
 import os
-
 import discord
 
 # from kcjargon.openai.conversation import conversation_obj
@@ -13,6 +12,7 @@ jargonai_dir = "/jargonai/jargonai"
 if path.isdir(jargonai_dir):
     sys.path.insert(0, jargonai_dir)
     from conversation import Conversation
+
 
 load_dotenv()
 
@@ -32,31 +32,35 @@ async def on_ready():
 @client.event
 async def on_message(message):
 
-    if message.author == client.user:
-        return
+    # if message.author == client.user:
+    #     return
+
     # actor_name = None
     # cv = None
     in_conversation = False
 
-    if message.content.startswith("!"):
+    if message.content.startswith("!") and not in_conversation:
         in_conversation = True
         actor_name = str(message.content[1::])
-        cv = Conversation(starting_environment="The following is chat with {}.".format(actor_name), bot_name="{}: ".format(actor_name))
-        # await message.author.send("The following is a chat with {}".format(Name))
-        # await message.author.send(message.content)
-    
-    while message.content != "quit" and in_conversation:
+        cv = Conversation(starting_environment="The following is a conversation with {}.".format(actor_name), bot_name="{}: ".format(actor_name))
+
+    while message.content != "quit" and in_conversation and message.author != client.user:
+
         cv.environment += "\nMe: " + str(message.content)
         cv.bot_append()
+
         await message.author.send(cv.bot_name + cv.toks)
+
         response = await client.wait_for("message")
         print(f"Reponse: {response}")
         message = response
+        in_conversation = True
 
-    if message.content == "quit" and in_conversation:
+    if message.content == "quit" and in_conversation and message.author:
         in_conversation = False
+        await message.author.send(f"Exited Chat With {actor_name}")
         print(f"Exiting Chat With {actor_name}")
-        print("Conversation: " + cv.environment)
+        print("Conversation:\n" + cv.environment)
         return
 
 
